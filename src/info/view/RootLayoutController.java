@@ -15,6 +15,6 @@ public class RootLayoutController {
 
     @FXML
     private void handleNew(){
-        controller.addTable();
+        controller.addStudentTable();
     }
 }
