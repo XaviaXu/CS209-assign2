@@ -72,7 +72,7 @@
                               <children>
                                   <Button mnemonicParsing="false" text="add new item" />
                                   <Button mnemonicParsing="false" text="edit" />
-                                  <Button mnemonicParsing="false" text="delete" />
+                                  <Button mnemonicParsing="false" onMouseClicked="#handleDeleteStudent" text="delete" />
                               </children>
                           </HBox>
                       </children>

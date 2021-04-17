@@ -3,9 +3,11 @@ package info.view;
 import info.MainApp;
 import info.model.Student;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import org.controlsfx.dialog.Dialogs;
 import util.DateUtil;
 
 public class StudentOverviewController {
@@ -71,6 +73,22 @@ public class StudentOverviewController {
             idLabel.setText("");
             nameLabel.setText("");
         }
+    }
+
+    @FXML
+    private void handleDeleteStudent(){
+        int selectIndex = studentTable.getSelectionModel().getSelectedIndex();
+        if(selectIndex>=0){
+            studentTable.getItems().remove(selectIndex);
+        }else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Person Selected");
+            alert.setContentText("Please select a person in the table.");
+
+            alert.showAndWait();
+        }
+
     }
 
 
