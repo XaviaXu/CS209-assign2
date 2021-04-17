@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import util.DateUtil;
 
 public class StudentOverviewController {
 
@@ -40,6 +41,13 @@ public class StudentOverviewController {
     private void initialize() {
         // Initialize the person table with the two columns.
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        showStudentDetail(null);
+
+        studentTable.getSelectionModel().selectedItemProperty().addListener(
+                ((observable, oldValue, newValue) -> showStudentDetail(newValue))
+        );
+
+
     }
 
     /**
@@ -52,6 +60,17 @@ public class StudentOverviewController {
 
         // Add observable list data to the table
         studentTable.setItems(mainApp.getStudentData());
+    }
+
+    private void showStudentDetail(Student student){
+        if(student!=null){
+            idLabel.setText(Integer.toString(student.getID()));
+            nameLabel.setText(student.getName());
+            birthdayLabel.setText(DateUtil.format(student.getBirthday()));
+        }else{
+            idLabel.setText("");
+            nameLabel.setText("");
+        }
     }
 
 
