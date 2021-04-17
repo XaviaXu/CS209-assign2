@@ -2,7 +2,10 @@ package info;
 
 import java.io.IOException;
 
+import info.model.Student;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -13,6 +16,11 @@ public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    private ObservableList<Student> studentData = FXCollections.observableArrayList();
+
+    public MainApp(){
+        studentData.add(new Student("?"));
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -66,6 +74,10 @@ public class MainApp extends Application {
      */
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public ObservableList<Student> getStudentData() {
+        return studentData;
     }
 
     public static void main(String[] args) {

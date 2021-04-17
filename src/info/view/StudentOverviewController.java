@@ -51,7 +51,7 @@ public class StudentOverviewController {
         this.mainApp = mainApp;
 
         // Add observable list data to the table
-//        studentTable.setItems(mainApp.getStudentData());
+        studentTable.setItems(mainApp.getStudentData());
     }
 
 
