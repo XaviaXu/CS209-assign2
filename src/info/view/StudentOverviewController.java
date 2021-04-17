@@ -3,16 +3,19 @@ package info.view;
 import info.MainApp;
 import info.model.Student;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import org.controlsfx.dialog.Dialogs;
 import util.DateUtil;
 
 public class StudentOverviewController {
 
     private MainApp mainApp;
+
+    private static int cnt = 1;
+
+    @FXML
+    private TabPane tabPane;
     @FXML
     private TableView<Student> studentTable;
     @FXML
@@ -50,6 +53,14 @@ public class StudentOverviewController {
         );
 
 
+    }
+
+    public void addTable(){
+        Tab newTab = new Tab("Table"+cnt);
+        cnt++;
+        AnchorPane an = new AnchorPane();
+        newTab.setContent(an);
+        tabPane.getTabs().add(newTab);
     }
 
     /**

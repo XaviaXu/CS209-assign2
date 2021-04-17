@@ -3,6 +3,7 @@ package info;
 import java.io.IOException;
 
 import info.model.Student;
+import info.view.RootLayoutController;
 import info.view.StudentOverviewController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -17,6 +18,8 @@ public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+
+    private RootLayoutController ctrl;
     private ObservableList<Student> studentData = FXCollections.observableArrayList();
 
     public MainApp(){
@@ -46,6 +49,11 @@ public class MainApp extends Application {
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
+
+            RootLayoutController controller = loader.getController();
+            ctrl = controller;
+            controller.setMainApp(this);
+
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,6 +75,7 @@ public class MainApp extends Application {
 
             StudentOverviewController controller = loader.getController();
             controller.setMainApp(this);
+            ctrl.setController(controller);
 
         } catch (IOException e) {
             e.printStackTrace();
