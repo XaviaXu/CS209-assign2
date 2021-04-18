@@ -12,26 +12,7 @@
               <items>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                       <children>
-                          <TabPane fx:id="tabPane" layoutX="42.0" layoutY="39.0" prefHeight="596.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <tabs>
-                        <Tab text="tab1">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <TableView fx:id="studentTable" prefHeight="759.0" prefWidth="787.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                      <columns>
-                                        <TableColumn prefWidth="75.0" text="ID" />
-                                        <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
-                                          <TableColumn prefWidth="118.0" text="Department" />
-                                          <TableColumn prefWidth="93.0" text="GPA" />
-                                          <TableColumn prefWidth="140.0" text="Credit Earned" />
-                                      </columns>
-                                    </TableView>
-                                 </children>
-                              </AnchorPane>
-                          </content>
-                        </Tab>
-                     </tabs></TabPane>
+                          <TabPane fx:id="tabPane" layoutX="42.0" layoutY="39.0" prefHeight="596.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                       </children>
                   </AnchorPane>
                   <AnchorPane>

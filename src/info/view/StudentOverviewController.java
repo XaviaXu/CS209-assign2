@@ -23,12 +23,7 @@ public class StudentOverviewController {
 
     @FXML
     private TabPane tabPane;
-    @FXML
-    private TableView<Student> studentTable;
-    @FXML
-    private TableColumn<Student, String> nameColumn;
-//    @FXML
-//    private TableColumn<Student, String> lastNameColumn;
+
 
     @FXML
     private Label idLabel;
@@ -51,35 +46,33 @@ public class StudentOverviewController {
 
     @FXML
     private void initialize() {
-        // Initialize the person table with the two columns.
-//        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.SELECTED_TAB);
-        nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         showStudentDetail(null);
-
-        studentTable.getSelectionModel().selectedItemProperty().addListener(
-                ((observable, oldValue, newValue) -> showStudentDetail(newValue))
-        );
-
-
     }
 
     public void addStudentTable(){
-        Tab newTab = new Tab("Table"+cnt);
+        Tab newTab = new Tab("Table "+cnt);
         newTab.setClosable(true);
         cnt++;
-//        AnchorPane an = new AnchorPane();
-//        newTab.setContent(an);
         TableView studentTable = createTable();
+
+
         ObservableList<Student> students = FXCollections.observableArrayList();
-        students.add(new Student("aaaa"));
+
+        students.add(new Student("sdsa"));
+        students.add(new Student("??"));
+
         studentTable.setItems(students);
+
+        studentTable.getSelectionModel().selectedItemProperty().addListener(
+                ((observable, oldValue, newValue) -> showStudentDetail((Student) newValue))
+        );
+
         studentData.put(newTab,students);
         newTab.setContent(studentTable);
 
-
         tabPane.getTabs().add(newTab);
-
         tabPane.getSelectionModel().select(newTab);
+
     }
 
     public TableView createTable(){
@@ -111,7 +104,7 @@ public class StudentOverviewController {
         this.mainApp = mainApp;
 
         // Add observable list data to the table
-        studentTable.setItems(mainApp.getStudentData());
+//        studentTable.setItems(mainApp.getStudentData());
     }
 
     private void showStudentDetail(Student student){
@@ -119,17 +112,28 @@ public class StudentOverviewController {
             idLabel.setText(Integer.toString(student.getID()));
             nameLabel.setText(student.getName());
             birthdayLabel.setText(DateUtil.format(student.getBirthday()));
+            genderLabel.setText(student.getGender());
+            departmentLabel.setText(student.getDepartment());
+            gpaLabel.setText(Double.toString(student.getGPA()));
+            creditLabel.setText(Integer.toString(student.getCreditEarned()));
         }else{
             idLabel.setText("");
             nameLabel.setText("");
+            birthdayLabel.setText("");
+            genderLabel.setText("");
+            departmentLabel.setText("");
+            gpaLabel.setText("");
+            creditLabel.setText("");
         }
     }
 
     @FXML
     private void handleDeleteStudent(){
-        int selectIndex = studentTable.getSelectionModel().getSelectedIndex();
+        Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
+        TableView selectedTable = (TableView) selectedTab.getContent();
+        int selectIndex = selectedTable.getSelectionModel().getSelectedIndex();
         if(selectIndex>=0){
-            studentTable.getItems().remove(selectIndex);
+            selectedTable.getItems().remove(selectIndex);
         }else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Selection");
