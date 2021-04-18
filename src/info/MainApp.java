@@ -22,10 +22,10 @@ public class MainApp extends Application {
     private BorderPane rootLayout;
 
     private RootLayoutController ctrl;
-    private ObservableList<Student> studentData = FXCollections.observableArrayList();
+//    private ObservableList<Student> studentData = FXCollections.observableArrayList();
 
     public MainApp(){
-        studentData.add(new Student("?"));
+
     }
 
     @Override
@@ -90,10 +90,6 @@ public class MainApp extends Application {
      */
     public Stage getPrimaryStage() {
         return primaryStage;
-    }
-
-    public ObservableList<Student> getStudentData() {
-        return studentData;
     }
 
     public boolean showStudentEditDialog(Student student){

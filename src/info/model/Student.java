@@ -19,8 +19,8 @@ public class Student {
     }
     public Student(String name){
         this.name = new SimpleStringProperty(name);
-        //
-        this.gender = new SimpleStringProperty("Female");
+
+        this.gender = new SimpleStringProperty("FEMALE");
         this.ID = new SimpleIntegerProperty(0);
         this.department = new SimpleStringProperty("?");
         this.GPA = new SimpleDoubleProperty(4.0);
@@ -61,6 +61,30 @@ public class Student {
     public StringProperty departmentProperty(){return department;}
     public DoubleProperty gpaProperty(){return GPA;}
     public IntegerProperty creditProperty(){return creditEarned;}
+
+    public void setName(String name){
+        this.name.set(name);
+    }
+
+    public void setID(int id){
+        this.ID.set(id);
+    }
+
+    public void setDepartment(String department){
+        this.department.set(department);
+    }
+
+    public void setGPA(double gpa){
+        this.GPA.set(gpa);
+    }
+
+    public void setCreditEarned(int creditEarned){
+        this.creditEarned.set(creditEarned);
+    }
+
+    public void setGender(){
+
+    }
 
 
 }

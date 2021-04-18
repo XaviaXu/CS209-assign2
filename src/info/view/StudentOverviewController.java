@@ -7,9 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import org.controlsfx.dialog.Dialogs;
-import util.DateUtil;
+import info.util.DateUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -130,7 +128,6 @@ public class StudentOverviewController {
         if (okClicked) {
             Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
             studentData.get(selectedTab).add(tempStudent);
-//            mainApp.getPersonData().add(tempPerson);
         }
     }
 

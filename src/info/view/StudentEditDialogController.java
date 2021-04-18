@@ -1,6 +1,8 @@
 package info.view;
 
 import info.model.Student;
+import javafx.beans.property.ReadOnlyIntegerProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -34,6 +36,7 @@ public class StudentEditDialogController {
     @FXML
     private void initialize() {
 //        genderField.getItems().addAll(gender);
+        genderField.getItems().addAll("MALE","FEMALE");
     }
 
     public void setDialogStage(Stage dialogStage) {
@@ -48,6 +51,13 @@ public class StudentEditDialogController {
         departmentField.setText(student.getDepartment());
         gpaField.setText(Double.toString(student.getGPA()));
         creditField.setText(Integer.toString(student.getCreditEarned()));
+        if(student.getGender().equals("MALE")){
+            genderField.getSelectionModel().select(0);
+        }else{
+            genderField.getSelectionModel().select(1);
+        }
+
+
     }
 
     public boolean isOkClicked() {
@@ -57,6 +67,8 @@ public class StudentEditDialogController {
     @FXML
     private void handleOK(){
         if(true){
+            int index = genderField.getSelectionModel().selectedIndexProperty().intValue();
+            String gender = index==1?"FEMALE":"MALE";
 
         }
     }
