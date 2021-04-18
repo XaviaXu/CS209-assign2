@@ -55,7 +55,6 @@ public class StudentOverviewController {
         cnt++;
         TableView studentTable = createTable();
 
-
         ObservableList<Student> students = FXCollections.observableArrayList();
 
         students.add(new Student("sdsa"));
@@ -102,9 +101,6 @@ public class StudentOverviewController {
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
-
-        // Add observable list data to the table
-//        studentTable.setItems(mainApp.getStudentData());
     }
 
     private void showStudentDetail(Student student){
@@ -128,6 +124,19 @@ public class StudentOverviewController {
     }
 
     @FXML
+    private void handleNewPerson() {
+        Student tempStudent = new Student();
+        boolean okClicked = mainApp.showStudentEditDialog(tempStudent);
+        if (okClicked) {
+            Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
+            studentData.get(selectedTab).add(tempStudent);
+//            mainApp.getPersonData().add(tempPerson);
+        }
+    }
+
+
+
+    @FXML
     private void handleDeleteStudent(){
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
         TableView selectedTable = (TableView) selectedTab.getContent();
@@ -139,7 +148,6 @@ public class StudentOverviewController {
             alert.setTitle("No Selection");
             alert.setHeaderText("No Person Selected");
             alert.setContentText("Please select a person in the table.");
-
             alert.showAndWait();
         }
 
