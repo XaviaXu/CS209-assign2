@@ -82,9 +82,10 @@ public class Student {
         this.creditEarned.set(creditEarned);
     }
 
-    public void setGender(){
-
+    public void setGender(String gender){
+        this.gender.set(gender);
     }
+
 
 
 }
