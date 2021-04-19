@@ -11,6 +11,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
+
 
 public class StudentEditDialogController {
     @FXML
@@ -56,6 +58,7 @@ public class StudentEditDialogController {
         }else{
             genderField.getSelectionModel().select(1);
         }
+        birthdayField.setValue(student.getBirthday());
 
 
     }
@@ -66,9 +69,21 @@ public class StudentEditDialogController {
 
     @FXML
     private void handleOK(){
-        if(true){
+        if(isInputValid()){
             int index = genderField.getSelectionModel().selectedIndexProperty().intValue();
             String gender = index==1?"FEMALE":"MALE";
+            LocalDate birthday = birthdayField.getValue();
+
+            student.setID(idField.getText());
+            student.setName(nameField.getText());
+            student.setGender(gender);
+            student.setDepartment(departmentField.getText());
+            student.setCreditEarned(creditField.getText());
+            student.setGPA(gpaField.getText());
+            student.setBirthday(birthday);
+
+            okClicked = true;
+            dialogStage.close();
 
         }
     }
@@ -76,6 +91,11 @@ public class StudentEditDialogController {
     @FXML
     private void handleCancel() {
         dialogStage.close();
+    }
+
+    private boolean isInputValid(){
+
+        return true;
     }
 
 

@@ -66,26 +66,29 @@ public class Student {
         this.name.set(name);
     }
 
-    public void setID(int id){
-        this.ID.set(id);
+    public void setID(String id){
+        this.ID.set(Integer.parseInt(id));
     }
 
     public void setDepartment(String department){
         this.department.set(department);
     }
 
-    public void setGPA(double gpa){
-        this.GPA.set(gpa);
+    public void setGPA(String gpa){
+        this.GPA.set(Double.parseDouble(gpa));
     }
 
-    public void setCreditEarned(int creditEarned){
-        this.creditEarned.set(creditEarned);
+    public void setCreditEarned(String creditEarned){
+        this.creditEarned.set(Integer.parseInt(creditEarned));
     }
 
     public void setGender(String gender){
         this.gender.set(gender);
     }
 
+    public void setBirthday(LocalDate birthday){
+        this.birthday.set(birthday);
+    }
 
 
 }

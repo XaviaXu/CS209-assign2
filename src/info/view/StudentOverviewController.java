@@ -55,8 +55,8 @@ public class StudentOverviewController {
 
         ObservableList<Student> students = FXCollections.observableArrayList();
 
-        students.add(new Student("sdsa"));
-        students.add(new Student("??"));
+//        students.add(new Student("sdsa"));
+//        students.add(new Student("??"));
 
         studentTable.setItems(students);
 
@@ -99,6 +99,10 @@ public class StudentOverviewController {
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+    }
+
+    public Map<Tab,ObservableList<Student>> getStudentData(){
+        return studentData;
     }
 
     private void showStudentDetail(Student student){
