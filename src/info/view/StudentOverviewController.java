@@ -131,23 +131,43 @@ public class StudentOverviewController {
         }
     }
 
-
-
     @FXML
-    private void handleDeleteStudent(){
-        Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-        TableView selectedTable = (TableView) selectedTab.getContent();
-        int selectIndex = selectedTable.getSelectionModel().getSelectedIndex();
-        if(selectIndex>=0){
-            selectedTable.getItems().remove(selectIndex);
-        }else{
+    private void handleEditStudent() {
+        try {
+            Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
+            TableView selectedTable = (TableView) selectedTab.getContent();
+            Student selectedStudent = (Student) selectedTable.getSelectionModel().getSelectedItem();
+
+            boolean okClicked = mainApp.showStudentEditDialog(selectedStudent);
+            if (okClicked) {
+                showStudentDetail(selectedStudent);
+            }
+        }catch (Exception e){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Selection");
             alert.setHeaderText("No Person Selected");
             alert.setContentText("Please select a person in the table.");
             alert.showAndWait();
         }
+    }
 
+
+
+    @FXML
+    private void handleDeleteStudent(){
+        try {
+            Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
+            TableView selectedTable = (TableView) selectedTab.getContent();
+            int selectIndex = selectedTable.getSelectionModel().getSelectedIndex();
+
+            selectedTable.getItems().remove(selectIndex);
+        }catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Person Selected");
+            alert.setContentText("Please select a person in the table.");
+            alert.showAndWait();
+        }
     }
 
 
