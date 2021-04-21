@@ -15,7 +15,7 @@ import java.util.Map;
 public class StudentOverviewController {
 
     private MainApp mainApp;
-//    private ObservableList<Student> studentData = FXCollections.observableArrayList();
+
     private Map<Tab,ObservableList<Student>> studentData = new HashMap<>();
     private static int cnt = 1;
 
@@ -42,8 +42,10 @@ public class StudentOverviewController {
 
     }
 
+
     @FXML
     private void initialize() {
+        RootLayoutController.setTabPane(tabPane);
         showStudentDetail(null);
     }
 

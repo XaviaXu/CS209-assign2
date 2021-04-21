@@ -94,6 +94,11 @@ public class StudentEditDialogController {
     }
 
     private boolean isInputValid(){
+        String errorMessage = "";
+
+
+
+
 
         return true;
     }
