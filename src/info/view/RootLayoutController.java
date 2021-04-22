@@ -7,8 +7,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.FileChooser;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.QuoteMode;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class RootLayoutController {
@@ -16,6 +23,9 @@ public class RootLayoutController {
     private StudentOverviewController controller;
 
     private static TabPane tabPane;
+
+    final String[] HEADERS = {"ID","Name","Gender","Department","GPA","Credit Earned","Birthday"};
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     public void setMainApp(MainApp mainApp){
         this.mainApp = mainApp;
@@ -35,8 +45,14 @@ public class RootLayoutController {
 
     @FXML
     private void handleSave(){
-        Map<Tab, ObservableList<Student>> studentData = controller.getStudentData();
-        Tab selected = tabPane.getSelectionModel().getSelectedItem();
+        Map<Tab, ObservableList<Student>> studentData = null;
+        Tab selected = null;
+        try{
+            studentData = controller.getStudentData();
+            selected = tabPane.getSelectionModel().getSelectedItem();
+        }catch (Exception e){
+            //TODO: ADD DIALOG
+        }
 
 
         FileChooser fileChooser = new FileChooser();
@@ -55,6 +71,24 @@ public class RootLayoutController {
                 file = new File(file.getPath() + ".csv");
             }
 //            mainApp.savePersonDataToFile(file);
+            mainApp.setStudentFilePath(file);
+            //TODO: SAVE DATA TO CSV
+            try {
+                FileWriter fw = new FileWriter(file);
+                CSVPrinter printer = new CSVPrinter(fw, CSVFormat.RFC4180.withHeader(HEADERS).withQuoteMode(QuoteMode.ALL));
+                ObservableList<Student> data = studentData.get(selected);
+                for (Student stu: data) {
+                    System.out.println(stu.getBirthday());
+                    printer.printRecord(stu.getID(),stu.getName(),stu.getGender(),stu.getDepartment(),
+                            stu.getGPA(),stu.getCreditEarned(),stu.getBirthday());
+                }
+
+                fw.close();
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }
