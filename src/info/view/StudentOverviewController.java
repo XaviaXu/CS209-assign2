@@ -57,9 +57,6 @@ public class StudentOverviewController {
 
         ObservableList<Student> students = FXCollections.observableArrayList();
 
-//        students.add(new Student("sdsa"));
-//        students.add(new Student("??"));
-
         studentTable.setItems(students);
 
         studentTable.getSelectionModel().selectedItemProperty().addListener(
