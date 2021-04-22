@@ -49,7 +49,7 @@ public class StudentOverviewController {
         showStudentDetail(null);
     }
 
-    public void addStudentTable(){
+    public Tab addStudentTable(){
         Tab newTab = new Tab("Table "+cnt);
         newTab.setClosable(true);
         cnt++;
@@ -72,6 +72,7 @@ public class StudentOverviewController {
         tabPane.getTabs().add(newTab);
         tabPane.getSelectionModel().select(newTab);
 
+        return newTab;
     }
 
     public TableView createTable(){
