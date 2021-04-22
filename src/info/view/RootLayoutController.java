@@ -16,15 +16,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.prefs.Preferences;
 
 public class RootLayoutController {
     private MainApp mainApp;
     private StudentOverviewController controller;
 
     private static TabPane tabPane;
+    private static int index;
 
     final String[] HEADERS = {"ID","Name","Gender","Department","GPA","Credit Earned","Birthday"};
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     public void setMainApp(MainApp mainApp){
         this.mainApp = mainApp;
@@ -39,7 +40,11 @@ public class RootLayoutController {
 
     @FXML
     private void handleNew(){
-        controller.addStudentTable();
+
+        Tab newTab = controller.addStudentTable();
+        String name = newTab.getText();
+        setStudentFilePath(name,null);
+
     }
 
     @FXML
@@ -59,7 +64,7 @@ public class RootLayoutController {
         File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
 
         if (file != null) {
-//            mainApp.loadPersonDataFromFile(file);
+            setStudentFilePath(newTab.getText(), file);
             //TODO:READ CSV
             DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -104,6 +109,28 @@ public class RootLayoutController {
             //TODO: ADD DIALOG
         }
 
+        File studentFile = getStudentFilePath(selected.getText());
+        if(studentFile!=null){
+            saveStudentDataToFile(data,studentFile);
+        }else{
+            handleSaveAs();
+        }
+    }
+
+
+    @FXML
+    private void handleSaveAs(){
+        Map<Tab, ObservableList<Student>> studentData = null;
+        Tab selected = null;
+        ObservableList<Student> data = null;
+        try{
+            studentData = controller.getStudentData();
+            selected = tabPane.getSelectionModel().getSelectedItem();
+            data = studentData.get(selected);
+        }catch (Exception e){
+            //TODO: ADD DIALOG
+        }
+
 
         FileChooser fileChooser = new FileChooser();
 
@@ -121,32 +148,69 @@ public class RootLayoutController {
                 file = new File(file.getPath() + ".csv");
             }
 //            mainApp.savePersonDataToFile(file);
-            mainApp.setStudentFilePath(file);
-            //TODO: SAVE DATA TO CSV
-            try {
-                FileWriter fw = new FileWriter(file);
-                CSVPrinter printer = new CSVPrinter(fw, CSVFormat.RFC4180.withHeader(HEADERS).withQuoteMode(QuoteMode.ALL));
-
-                for (Student stu: data) {
-//                    System.out.println(stu.getBirthday());
-                    printer.printRecord(stu.getID(),stu.getName(),stu.getGender(),stu.getDepartment(),
-                            stu.getGPA(),stu.getCreditEarned(),stu.getBirthday());
-                }
-
-                fw.close();
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            setStudentFilePath(selected.getText(),file);
+            saveStudentDataToFile(data, file);
         }
 
+    }
+
+    private void saveStudentDataToFile(ObservableList<Student> data, File file) {
+
+        //TODO: SAVE DATA TO CSV
+        try {
+            FileWriter fw = new FileWriter(file);
+            CSVPrinter printer = new CSVPrinter(fw, CSVFormat.RFC4180.withHeader(HEADERS).withQuoteMode(QuoteMode.ALL));
+
+            for (Student stu: data) {
+//                    System.out.println(stu.getBirthday());
+                printer.printRecord(stu.getID(),stu.getName(),stu.getGender(),stu.getDepartment(),
+                        stu.getGPA(),stu.getCreditEarned(),stu.getBirthday());
+            }
+
+            fw.close();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
     @FXML
     private void handleSearch(){
 
+    }
+
+    /**
+     * Sets the file path of the currently loaded file. The path is persisted in
+     * the OS specific registry.
+     *
+     * @param file the file or null to remove the path
+     */
+    public void setStudentFilePath(String tabName,File file) {
+        Preferences prefs = Preferences.userNodeForPackage(RootLayoutController.class);
+        if (file != null) {
+            prefs.put(tabName, file.getPath());
+        } else {
+            prefs.remove(tabName);
+        }
+    }
+
+    /**
+     * Returns the person file preference, i.e. the file that was last opened.
+     * The preference is read from the OS specific registry. If no such
+     * preference can be found, null is returned.
+     *
+     * @return
+     */
+    public File getStudentFilePath(String tabName) {
+        Preferences prefs = Preferences.userNodeForPackage(RootLayoutController.class);
+        String filePath = prefs.get(tabName, null);
+        if (filePath != null) {
+            return new File(filePath);
+        } else {
+            return null;
+        }
     }
 
 }

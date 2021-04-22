@@ -51,6 +51,7 @@ public class StudentOverviewController {
 
     public Tab addStudentTable(){
         Tab newTab = new Tab("Table "+cnt);
+
         newTab.setClosable(true);
         cnt++;
         TableView studentTable = createTable();
