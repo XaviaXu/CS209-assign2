@@ -79,17 +79,21 @@ public class StudentOverviewController {
         TableView table = new TableView();
         TableColumn idCol = new TableColumn("ID");
         TableColumn nameCol = new TableColumn("Name");
+        TableColumn genderCol = new TableColumn("Gender");
         TableColumn departCol = new TableColumn("Department");
         TableColumn gpaCol = new TableColumn("GPA");
         TableColumn creditCol = new TableColumn("Credit Earned");
+        TableColumn birthdayCol = new TableColumn("Birthday");
 
-        table.getColumns().addAll(idCol,nameCol,departCol,gpaCol,creditCol);
+        table.getColumns().addAll(idCol,nameCol,genderCol,departCol,gpaCol,creditCol,birthdayCol);
 //        tab.setContent(table);
         idCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        genderCol.setCellValueFactory(new PropertyValueFactory<>("gender"));
         departCol.setCellValueFactory(new PropertyValueFactory<>("department"));
         gpaCol.setCellValueFactory(new PropertyValueFactory<>("GPA"));
         creditCol.setCellValueFactory(new PropertyValueFactory<>("creditEarned"));
+        birthdayCol.setCellValueFactory(new PropertyValueFactory<>("birthday"));
 
         return table;
 

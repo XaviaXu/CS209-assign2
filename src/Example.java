@@ -11,7 +11,7 @@ import java.util.List;
 public class Example {
     public static void main(String[] args) throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        final String[] HEADERS = {"ID", "Name", "Gender", "Department", "GPA", "Credit Earned", "Birthday"};
+        final String[] HEADERS = {"ID", "Name",  "Department", "GPA", "Gender","Credit Earned", "Birthday"};
 
         // Demo: How to read a csv file
         Reader in = new FileReader("example.csv");
