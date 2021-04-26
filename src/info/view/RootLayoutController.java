@@ -97,7 +97,7 @@ public class RootLayoutController {
     }
 
     @FXML
-    private void handleSave(){
+    public void handleSave(){
         Map<Tab, ObservableList<Student>> studentData = null;
         Tab selected = null;
         ObservableList<Student> data = null;

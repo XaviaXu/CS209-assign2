@@ -79,6 +79,7 @@ public class MainApp extends Application {
 
             StudentOverviewController controller = loader.getController();
             controller.setMainApp(this);
+            controller.setRootLayoutController(ctrl);
             ctrl.setController(controller);
 
         } catch (IOException e) {

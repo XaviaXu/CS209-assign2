@@ -36,7 +36,7 @@ public class StudentEditDialogController {
     private Stage dialogStage;
     private Student student;
     private boolean okClicked = false;
-    private ObservableList<String> gender = FXCollections.observableArrayList("MALE","FEMALE");
+
 
     @FXML
     private void initialize() {

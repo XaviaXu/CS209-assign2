@@ -8,14 +8,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import info.util.DateUtil;
+import javafx.stage.Modality;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class StudentOverviewController {
 
     private MainApp mainApp;
-
+    private RootLayoutController rootLayoutController;
     private Map<Tab,ObservableList<Student>> studentData = new HashMap<>();
     private static int cnt = 1;
 
@@ -49,10 +51,26 @@ public class StudentOverviewController {
         showStudentDetail(null);
     }
 
+    public void setRootLayoutController(RootLayoutController controller){
+        this.rootLayoutController = controller;
+    }
+
     public Tab addStudentTable(){
         Tab newTab = new Tab("Table "+cnt);
 
         newTab.setClosable(true);
+        newTab.setOnCloseRequest(event -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION,"?",
+                    new ButtonType("Cancel",ButtonBar.ButtonData.NO),new ButtonType("Confirm",ButtonBar.ButtonData.OK_DONE));
+            alert.setTitle("Confirm");
+            alert.setHeaderText("Confirm");
+            alert.setContentText("Save changes?");
+            Optional<ButtonType> buttonType = alert.showAndWait();
+            if(buttonType.get().getButtonData().equals(ButtonBar.ButtonData.OK_DONE)){
+                rootLayoutController.handleSave();
+            }
+        });
+
         cnt++;
         TableView studentTable = createTable();
 
