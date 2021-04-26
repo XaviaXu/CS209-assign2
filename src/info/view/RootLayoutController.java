@@ -2,8 +2,10 @@ package info.view;
 
 import info.MainApp;
 import info.model.Student;
+import info.util.checkCSV;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.FileChooser;
@@ -23,7 +25,7 @@ public class RootLayoutController {
     private StudentOverviewController controller;
 
     private static TabPane tabPane;
-    private static int index;
+//    private static int index;
 
     final String[] HEADERS = {"ID","Name","Gender","Department","GPA","Credit Earned","Birthday"};
 
@@ -65,6 +67,17 @@ public class RootLayoutController {
 
         if (file != null) {
             setStudentFilePath(newTab.getText(), file);
+            //TODO:CHECK VALIDATION
+
+            if(!checkCSV.checkValid(file)){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Invalid file");
+                alert.setHeaderText("Error");
+                alert.setContentText("Opened file is invalid.");
+                alert.showAndWait();
+                return;
+            }
+
             //TODO:READ CSV
             DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -75,7 +88,6 @@ public class RootLayoutController {
                         .withFirstRecordAsHeader().withQuoteMode(QuoteMode.ALL).parse(in);
                 List<CSVRecord> records = parser.getRecords();
                 for (CSVRecord record : records) {
-                    //todo: check data validation
                     Student stu = new Student(record.get("Name"));
                     stu.setID(record.get("ID"));
                     stu.setGender(record.get("Gender"));
@@ -147,7 +159,6 @@ public class RootLayoutController {
             if (!file.getPath().endsWith(".csv")) {
                 file = new File(file.getPath() + ".csv");
             }
-//            mainApp.savePersonDataToFile(file);
             setStudentFilePath(selected.getText(),file);
             saveStudentDataToFile(data, file);
         }
