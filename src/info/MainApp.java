@@ -8,6 +8,7 @@ import info.model.Student;
 import info.view.RootLayoutController;
 import info.view.StudentEditDialogController;
 import info.view.StudentOverviewController;
+import info.view.StudentSearchController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -125,8 +126,35 @@ public class MainApp extends Application {
         }
     }
 
+    public boolean showStudentSearchDialog(){
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/StudentSearch.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Search Student");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            StudentSearchController controller = loader.getController();
+//            controller.setDialogStage(dialogStage);
 
 
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (Exception e) {
+//            e.printStackTrace();
+            return false;
+        }
+    }
 
 
     public static void main(String[] args) {

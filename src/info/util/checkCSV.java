@@ -62,7 +62,6 @@ public class checkCSV {
             if(!flag){
                 return false;
             }
-
         }
         return true;
 

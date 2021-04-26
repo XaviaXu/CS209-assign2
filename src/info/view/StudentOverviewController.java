@@ -178,8 +178,6 @@ public class StudentOverviewController {
         }
     }
 
-
-
     @FXML
     private void handleDeleteStudent(){
         try {
@@ -197,6 +195,8 @@ public class StudentOverviewController {
         }
     }
 
+    public void selectData(String key){
 
+    }
 
 }

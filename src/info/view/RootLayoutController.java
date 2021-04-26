@@ -173,7 +173,6 @@ public class RootLayoutController {
             CSVPrinter printer = new CSVPrinter(fw, CSVFormat.RFC4180.withHeader(HEADERS).withQuoteMode(QuoteMode.ALL));
 
             for (Student stu: data) {
-//                    System.out.println(stu.getBirthday());
                 printer.printRecord(stu.getID(),stu.getName(),stu.getGender(),stu.getDepartment(),
                         stu.getGPA(),stu.getCreditEarned(),stu.getBirthday());
             }
@@ -189,7 +188,10 @@ public class RootLayoutController {
 
     @FXML
     private void handleSearch(){
+        boolean okClicked = mainApp.showStudentSearchDialog();
+        if(okClicked){
 
+        }
     }
 
     /**
