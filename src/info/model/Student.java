@@ -90,5 +90,11 @@ public class Student {
         this.birthday.set(birthday);
     }
 
-
+    @Override
+    public String toString(){
+        String content = this.getID()+" "+ this.getName() + " " + this.getGender() + " "
+                + this.getDepartment() + " " + this.getGPA() + " " + this.getCreditEarned()
+                + " " + this.getBirthday();
+        return content;
+    }
 }

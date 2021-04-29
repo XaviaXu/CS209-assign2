@@ -25,6 +25,7 @@ public class MainApp extends Application {
     private BorderPane rootLayout;
 
     private RootLayoutController ctrl;
+    private StudentOverviewController overviewCtrl;
 //    private ObservableList<Student> studentData = FXCollections.observableArrayList();
 
     public MainApp(){
@@ -82,6 +83,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
             controller.setRootLayoutController(ctrl);
             ctrl.setController(controller);
+            this.overviewCtrl = controller;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -126,7 +128,7 @@ public class MainApp extends Application {
         }
     }
 
-    public boolean showStudentSearchDialog(){
+    public String showStudentSearchDialog(){
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
@@ -143,16 +145,17 @@ public class MainApp extends Application {
 
             // Set the person into the controller.
             StudentSearchController controller = loader.getController();
-//            controller.setDialogStage(dialogStage);
+            controller.setDialogStage(dialogStage);
+            controller.setController(overviewCtrl);
 
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
 
-            return controller.isOkClicked();
+            return controller.getKey();
         } catch (Exception e) {
-//            e.printStackTrace();
-            return false;
+            e.printStackTrace();
+            return null;
         }
     }
 

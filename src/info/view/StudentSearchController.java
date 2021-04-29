@@ -2,16 +2,16 @@ package info.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.awt.*;
+
 
 public class StudentSearchController {
 
     private Stage dialogStage;
     private boolean okClicked = false;
-
-//    private StudentOverviewController controller;
+    private StudentOverviewController controller;
 
     @FXML
     private TextField keyField;
@@ -20,18 +20,23 @@ public class StudentSearchController {
     private void initialize(){
     }
 
+    public void setController(StudentOverviewController controller){
+        this.controller = controller;
+    }
+
     public void setDialogStage(Stage dialogStage){
         this.dialogStage = dialogStage;
     }
 
-    public boolean isOkClicked(){
-        return okClicked;
-    }
+
+    public String getKey(){return keyField.getText();}
 
     @FXML
     private void searchNext(){
-        if(keyField.getText()!=null){
+//        System.out.println(keyField.getText());
+        if(keyField.getText()!=null&&keyField.getText().length()!=0){
             okClicked = true;
+            controller.selectData(keyField.getText());
         }else{
             okClicked = false;
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -40,5 +45,6 @@ public class StudentSearchController {
             alert.setContentText("Please input a valid key for selection.");
             alert.showAndWait();
         }
+
     }
 }

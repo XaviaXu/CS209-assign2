@@ -6,11 +6,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info.view.StudentSearchController">
    <children>
       <Label layoutX="95.0" layoutY="73.0" text="Search" AnchorPane.leftAnchor="50.0" />
       <Label layoutX="50.0" layoutY="142.0" text="Please input the content to search" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="130.0" />
-      <TextField alignment="TOP_LEFT" layoutX="174.0" layoutY="200.0" prefHeight="30.0" prefWidth="200.0" />
-      <Button layoutX="247.0" layoutY="303.0" mnemonicParsing="false" text="Next" />
+      <TextField fx:id="keyField" alignment="TOP_LEFT" layoutX="174.0" layoutY="200.0" prefHeight="30.0" prefWidth="200.0" />
+      <Button layoutX="247.0" layoutY="303.0" mnemonicParsing="false" onMouseClicked="#searchNext" text="Next" />
    </children>
 </AnchorPane>

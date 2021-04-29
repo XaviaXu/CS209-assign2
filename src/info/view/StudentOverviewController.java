@@ -21,6 +21,10 @@ public class StudentOverviewController {
     private Map<Tab,ObservableList<Student>> studentData = new HashMap<>();
     private static int cnt = 1;
 
+    private String previousKey = null;
+    private int searchCount = 0;
+
+
     @FXML
     private TabPane tabPane;
 
@@ -71,9 +75,11 @@ public class StudentOverviewController {
             }
         });
 
-        cnt++;
-        TableView studentTable = createTable();
 
+        TableView studentTable = createTable();
+        studentTable.setId("Table "+cnt);
+
+        cnt++;
         ObservableList<Student> students = FXCollections.observableArrayList();
 
         studentTable.setItems(students);
@@ -196,6 +202,46 @@ public class StudentOverviewController {
     }
 
     public void selectData(String key){
+        if(!key.equals(previousKey)){
+            previousKey = key;
+            searchCount = 0;
+        }else{
+            searchCount++;
+        }
+        //search using previousKey and searchCount
+
+        int cnt = searchCount;
+        for (Tab tab:studentData.keySet()) {
+            ObservableList<Student> data = studentData.get(tab);
+            for (int i = 0; i <data.toArray().length ; i++) {
+                String stu = data.get(i).toString();
+                System.out.println(stu);
+                if(stu.contains(key)){
+                    cnt--;
+                    if(cnt<0){
+                        //find correct one
+                        tabPane.getSelectionModel().select(tab);
+                        TableView selectedTable = (TableView) tab.getContent();
+                        selectedTable.getSelectionModel().select(i);
+                        break;
+                    }
+                }
+            }
+
+            if(cnt>=0){
+                //haven't search
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Not Found");
+                alert.setHeaderText("Cannot find relevant student or all results are found out");
+                alert.setContentText("Please change keyword.");
+                alert.showAndWait();
+                searchCount--;
+            }
+
+        }
+
+
+
 
     }
 

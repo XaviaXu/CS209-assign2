@@ -188,10 +188,10 @@ public class RootLayoutController {
 
     @FXML
     private void handleSearch(){
-        boolean okClicked = mainApp.showStudentSearchDialog();
-        if(okClicked){
-
-        }
+        String key = mainApp.showStudentSearchDialog();
+//        if(key!=null&&key.length()!=0){
+//            controller.selectData(key);
+//        }
     }
 
     /**
