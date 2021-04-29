@@ -113,20 +113,28 @@ public class RootLayoutController {
         Map<Tab, ObservableList<Student>> studentData = null;
         Tab selected = null;
         ObservableList<Student> data = null;
+        File studentFile = null;
         try{
             studentData = controller.getStudentData();
             selected = tabPane.getSelectionModel().getSelectedItem();
             data = studentData.get(selected);
+            studentFile = getStudentFilePath(selected.getText());
+            if(studentFile!=null){
+                saveStudentDataToFile(data,studentFile);
+            }else{
+                handleSaveAs();
+            }
         }catch (Exception e){
             //TODO: ADD DIALOG
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Table");
+            alert.setHeaderText("No Table");
+            alert.setContentText("Please open a table before saving.");
+            alert.showAndWait();
         }
 
-        File studentFile = getStudentFilePath(selected.getText());
-        if(studentFile!=null){
-            saveStudentDataToFile(data,studentFile);
-        }else{
-            handleSaveAs();
-        }
+
+
     }
 
 
@@ -135,13 +143,19 @@ public class RootLayoutController {
         Map<Tab, ObservableList<Student>> studentData = null;
         Tab selected = null;
         ObservableList<Student> data = null;
-        try{
-            studentData = controller.getStudentData();
-            selected = tabPane.getSelectionModel().getSelectedItem();
-            data = studentData.get(selected);
-        }catch (Exception e){
-            //TODO: ADD DIALOG
+
+        studentData = controller.getStudentData();
+        selected = tabPane.getSelectionModel().getSelectedItem();
+        data = studentData.get(selected);
+        if(selected==null){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Table");
+            alert.setHeaderText("No Table");
+            alert.setContentText("Please open a table before executing save as.");
+            alert.showAndWait();
+            return;
         }
+
 
 
         FileChooser fileChooser = new FileChooser();
