@@ -8,7 +8,7 @@ public class Student {
     private final StringProperty name;
 
     private final StringProperty gender;
-    private final IntegerProperty ID;
+    private final StringProperty ID;
     private final StringProperty department;
     private final DoubleProperty GPA;
     private final IntegerProperty creditEarned;
@@ -21,7 +21,7 @@ public class Student {
         this.name = new SimpleStringProperty(name);
 
         this.gender = new SimpleStringProperty("FEMALE");
-        this.ID = new SimpleIntegerProperty(0);
+        this.ID = new SimpleStringProperty("11899901");
         this.department = new SimpleStringProperty("?");
         this.GPA = new SimpleDoubleProperty(4.0);
         this.creditEarned = new SimpleIntegerProperty(10);
@@ -44,7 +44,7 @@ public class Student {
         return creditEarned.get();
     }
 
-    public int getID() {
+    public String getID() {
         return ID.get();
     }
     public String getDepartment(){
@@ -54,7 +54,7 @@ public class Student {
         return birthday.get();
     }
 
-    public IntegerProperty idProperty(){return ID;}
+    public StringProperty idProperty(){return ID;}
     public StringProperty nameProperty(){
         return name;
     }
@@ -67,7 +67,7 @@ public class Student {
     }
 
     public void setID(String id){
-        this.ID.set(Integer.parseInt(id));
+        this.ID.set(id);
     }
 
     public void setDepartment(String department){

@@ -144,7 +144,7 @@ public class StudentOverviewController {
 
     private void showStudentDetail(Student student){
         if(student!=null){
-            idLabel.setText(Integer.toString(student.getID()));
+            idLabel.setText(student.getID());
             nameLabel.setText(student.getName());
             birthdayLabel.setText(DateUtil.format(student.getBirthday()));
             genderLabel.setText(student.getGender());
@@ -253,7 +253,7 @@ public class StudentOverviewController {
 
     public void closeAllTabs(){
         for (Tab tab:tabPane.getTabs()) {
-            Event.fireEvent(tab,new Event(Tab.CLOSED_EVENT));
+
             System.out.println(tab.getText());
             //copy
             if(!tableChanged.get(tab.getText())){
@@ -272,7 +272,7 @@ public class StudentOverviewController {
             }
             studentData.remove(tab);
             tableChanged.remove(tab.getText());
-
+            Event.fireEvent(tab,new Event(Tab.CLOSED_EVENT));
         }
     }
 

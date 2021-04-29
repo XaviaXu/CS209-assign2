@@ -51,7 +51,7 @@ public class StudentEditDialogController {
     public void setStudent(Student student){
         this.student = student;
 
-        idField.setText(Integer.toString(student.getID()));
+        idField.setText(student.getID());
         nameField.setText(student.getName());
         departmentField.setText(student.getDepartment());
         gpaField.setText(Double.toString(student.getGPA()));
@@ -101,17 +101,6 @@ public class StudentEditDialogController {
 
         if(idField.getText()==null||idField.getText().length()==0){
             errorMessage+="No valid ID found!\n";
-        }else{
-            int temp = 0;
-            try{
-                temp = Integer.parseInt(idField.getText());
-                if(temp<0){
-                    errorMessage+="ID pattern invalid !\n";
-                }
-            }catch (NumberFormatException e){
-                errorMessage+="ID pattern invalid !\n";
-            }
-
         }
         if(nameField.getText()==null||nameField.getText().length()==0){
             errorMessage+="No valid name found!\n";
