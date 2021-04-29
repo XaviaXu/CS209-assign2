@@ -4,6 +4,7 @@ import info.MainApp;
 import info.model.Student;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -19,6 +20,7 @@ public class StudentOverviewController {
     private MainApp mainApp;
     private RootLayoutController rootLayoutController;
     private Map<Tab,ObservableList<Student>> studentData = new HashMap<>();
+    private Map<String,Boolean> tableChanged = new HashMap<>();
     private static int cnt = 1;
 
     private String previousKey = null;
@@ -61,20 +63,26 @@ public class StudentOverviewController {
 
     public Tab addStudentTable(){
         Tab newTab = new Tab("Table "+cnt);
+        tableChanged.put(newTab.getText(),false);
 
         newTab.setClosable(true);
         newTab.setOnCloseRequest(event -> {
+            if(!tableChanged.get(newTab.getText())){
+                System.out.println("Tab hasn't changed.");
+                return;
+            }
             Alert alert = new Alert(Alert.AlertType.INFORMATION,"?",
                     new ButtonType("Cancel",ButtonBar.ButtonData.NO),new ButtonType("Confirm",ButtonBar.ButtonData.OK_DONE));
             alert.setTitle("Confirm");
             alert.setHeaderText("Confirm");
-            alert.setContentText("Save changes?");
+            alert.setContentText("Save changes on "+newTab.getText()+" ?");
             Optional<ButtonType> buttonType = alert.showAndWait();
             if(buttonType.get().getButtonData().equals(ButtonBar.ButtonData.OK_DONE)){
                 rootLayoutController.handleSave();
             }
+            studentData.remove(newTab);
+            tableChanged.remove(newTab.getText());
         });
-
 
         TableView studentTable = createTable();
         studentTable.setId("Table "+cnt);
@@ -161,6 +169,7 @@ public class StudentOverviewController {
         if (okClicked) {
             Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
             studentData.get(selectedTab).add(tempStudent);
+            tableChanged.put(selectedTab.getText(),true);
         }
     }
 
@@ -174,6 +183,7 @@ public class StudentOverviewController {
             boolean okClicked = mainApp.showStudentEditDialog(selectedStudent);
             if (okClicked) {
                 showStudentDetail(selectedStudent);
+                tableChanged.put(selectedTab.getText(),true);
             }
         }catch (Exception e){
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -192,6 +202,7 @@ public class StudentOverviewController {
             int selectIndex = selectedTable.getSelectionModel().getSelectedIndex();
 
             selectedTable.getItems().remove(selectIndex);
+            tableChanged.put(selectedTab.getText(),true);
         }catch (Exception e){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Selection");
@@ -237,12 +248,32 @@ public class StudentOverviewController {
                 alert.showAndWait();
                 searchCount--;
             }
+        }
+    }
+
+    public void closeAllTabs(){
+        for (Tab tab:tabPane.getTabs()) {
+            Event.fireEvent(tab,new Event(Tab.CLOSED_EVENT));
+            System.out.println(tab.getText());
+            //copy
+            if(!tableChanged.get(tab.getText())){
+                System.out.println("Tab hasn't changed.");
+                continue;
+            }
+            tabPane.getSelectionModel().select(tab);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION,"?",
+                    new ButtonType("Cancel",ButtonBar.ButtonData.NO),new ButtonType("Confirm",ButtonBar.ButtonData.OK_DONE));
+            alert.setTitle("Confirm");
+            alert.setHeaderText("Confirm");
+            alert.setContentText("Save changes on "+tab.getText()+" ?");
+            Optional<ButtonType> buttonType = alert.showAndWait();
+            if(buttonType.get().getButtonData().equals(ButtonBar.ButtonData.OK_DONE)){
+                rootLayoutController.handleSave();
+            }
+            studentData.remove(tab);
+            tableChanged.remove(tab.getText());
 
         }
-
-
-
-
     }
 
 }
